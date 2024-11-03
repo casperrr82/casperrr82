@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    /* Add to existing styles */
+    .header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+    
+    .timer {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #dc3545;
+    }
+    
+    .bookmark-btn {
+        background: #ffc107;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    .question.bookmarked {
+        border-left: 4px solid #ffc107;
+    }
+    
+    .review-mode {
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+    }
+    
+    .results-detail {
+        margin-top: 20px;
+    }
+    
+    .topic-score {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+    
+    .nav-controls {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+    
+    .nav-btn {
+        padding: 5px 15px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+</style>
+    <meta charset="UTF-8">
+    <title>PMI-PBA Mock Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tab-container {
+            margin-top: 20px;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .tab-button.active {
+            background: #007bff;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e9ecef;
+            border-radius: 5px;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 100%;
+            background: #28a745;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+        .explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 3px solid #007bff;
+            display: none;
+        }
+    </style>
+</head>
+<div class="header-controls">
+    <div class="timer" id="examTimer">Time Remaining: 240:00</div>
+    <button class="nav-btn" onclick="toggleReviewMode()">Toggle Review Mode</button>
+</div>
+<body>
+    <div class="header">
+        <h1>PMI-PBA Mock Exam</h1>
+        <p>200 Questions | Time: 240 Minutes</p>
+    </div>
+    
+    <div class="tab-container">
+        <div class="tab-buttons" id="tabButtons">
+            <!-- Dynamically generated -->
+        </div>
+        
+        <div id="tabContents">
+            <!-- Dynamically generated -->
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="results" id="results">
+        <h2>Exam Results</h2>
+        <p>Score: <span id="score">0</span>%</p>
+        <p>Correct Answers: <span id="correct">0</span>/200</p>
+        <div id="incorrectAnswers"></div>
+    </div>
+
+    <script>
+        // Insert all the question sets here
+        const examQuestions = [
+        const examQuestions = [
+    // Set 1 (Questions 1-10)
+    {
+        questions: [
+            {
+                id: 1,
+                text: "When starting a new project, what should be the FIRST step in understanding the business environment?",
+                options: [
+                    "Create process flow diagrams",
+                    "Interview stakeholders",
+                    "Review existing documentation",
+                    "Schedule team meetings"
+                ],
+                correct: 2,
+                explanation: "Starting with existing documentation provides context and helps prepare for more effective stakeholder interactions."
+            },
+            {
+                id: 2,
+                text: "During initial needs assessment, stakeholders present conflicting business objectives. What is the BEST course of action?",
+                options: [
+                    "Document all conflicts in the requirements log",
+                    "Arrange a facilitated workshop",
+                    "Follow the senior stakeholder's direction",
+                    "Implement all requirements"
+                ],
+                correct: 1,
+                explanation: "A facilitated workshop allows stakeholders to discuss conflicts and reach consensus through structured discussion."
+            },
+            {
+                id: 3,
+                text: "Which technique is MOST effective for identifying root causes of business problems?",
+                options: [
+                    "Fishbone diagram",
+                    "Process modeling",
+                    "SWOT analysis",
+                    "Requirements workshop"
+                ],
+                correct: 0,
+                explanation: "Fishbone (Ishikawa) diagrams are specifically designed for root cause analysis by examining various potential causes."
+            },
+            {
+                id: 4,
+                text: "What is the PRIMARY purpose of a feasibility study?",
+                options: [
+                    "To create detailed project plans",
+                    "To evaluate if a solution is viable",
+                    "To document all requirements",
+                    "To assign project resources"
+                ],
+                correct: 1,
+                explanation: "A feasibility study determines whether a proposed solution is viable from technical, operational, and financial perspectives."
+            },
+            {
+                id: 5,
+                text: "During requirements planning, which factor is MOST important to consider first?",
+                options: [
+                    "Available tools and technologies",
+                    "Stakeholder availability and preferences",
+                    "Project timeline",
+                    "Budget constraints"
+                ],
+                correct: 1,
+                explanation: "Understanding stakeholder availability and preferences is crucial for effective requirements gathering and project success."
+            },
+            {
+                id: 6,
+                text: "What is the BEST way to validate business process requirements?",
+                options: [
+                    "Peer review",
+                    "Process simulation",
+                    "Documentation review",
+                    "Management approval"
+                ],
+                correct: 1,
+                explanation: "Process simulation allows stakeholders to see how the process works in practice and identify potential issues before implementation."
+            },
+            {
+                id: 7,
+                text: "When creating a requirements management plan, what should be included FIRST?",
+                options: [
+                    "Change control process",
+                    "Requirements attributes",
+                    "Traceability approach",
+                    "Documentation standards"
+                ],
+                correct: 0,
+                explanation: "The change control process is fundamental as it affects how all requirements will be managed throughout the project lifecycle."
+            },
+            {
+                id: 8,
+                text: "Which technique is MOST effective for gathering requirements from geographically dispersed stakeholders?",
+                options: [
+                    "Face-to-face interviews",
+                    "Online surveys with follow-up calls",
+                    "Single workshop session",
+                    "Document analysis"
+                ],
+                correct: 1,
+                explanation: "Online surveys with follow-up calls accommodate different time zones while allowing for clarification when needed."
+            },
+            {
+                id: 9,
+                text: "A stakeholder insists on implementing a specific technical solution. What should you do FIRST?",
+                options: [
+                    "Document the technical requirements",
+                    "Understand the underlying business need",
+                    "Create implementation plans",
+                    "Research the technology"
+                ],
+                correct: 1,
+                explanation: "Understanding the underlying business need ensures the right solution is chosen rather than immediately accepting a predetermined technical solution."
+            },
+            {
+                id: 10,
+                text: "Which document is MOST important for ensuring requirements traceability?",
+                options: [
+                    "Requirements traceability matrix",
+                    "Project schedule",
+                    "Status report",
+                    "Change log"
+                ],
+                correct: 0,
+                explanation: "A requirements traceability matrix specifically links requirements to business objectives and solution components, ensuring complete coverage."
+            }
+        ]
+    }
+// Set 2 (Questions 11-20)
+{
+    questions: [
+        {
+            id: 11,
+            text: "During requirements elicitation, stakeholders keep changing their minds about features. What should you do FIRST?",
+            options: [
+                "Freeze requirements immediately",
+                "Analyze the cause of changes",
+                "Escalate to project sponsor",
+                "Document all versions"
+            ],
+            correct: 1,
+            explanation: "Understanding why requirements keep changing helps address the underlying cause and establish better requirement stability."
+        },
+        {
+            id: 12,
+            text: "When analyzing complex business rules, which technique is MOST effective?",
+            options: [
+                "Decision table",
+                "Flowchart",
+                "Use case",
+                "Process diagram"
+            ],
+            correct: 0,
+            explanation: "Decision tables help systematically analyze complex business rules by showing all possible combinations of conditions and resulting actions."
+        },
+        {
+            id: 13,
+            text: "A new stakeholder joins the project and disagrees with previously approved requirements. What should you do FIRST?",
+            options: [
+                "Ignore their input as requirements are approved",
+                "Update requirements immediately",
+                "Understand their concerns and impact",
+                "Escalate to project sponsor"
+            ],
+            correct: 2,
+            explanation: "Understanding their concerns and potential impact helps evaluate whether changes are necessary and beneficial to the project."
+        },
+        {
+            id: 14,
+            text: "Which tool is MOST appropriate for documenting requirement dependencies?",
+            options: [
+                "Requirements traceability matrix",
+                "Project schedule",
+                "Risk register",
+                "Status report"
+            ],
+            correct: 0,
+            explanation: "A requirements traceability matrix specifically shows relationships and dependencies between requirements and other project elements."
+        },
+        {
+            id: 15,
+            text: "What is the BEST approach for validating user interface requirements?",
+            options: [
+                "Technical review",
+                "Prototype demonstration",
+                "Document inspection",
+                "Code review"
+            ],
+            correct: 1,
+            explanation: "Prototypes allow users to interact with the proposed interface and provide feedback before actual development begins."
+        },
+        {
+            id: 16,
+            text: "When stakeholders can't agree on requirement priorities, what should you do FIRST?",
+            options: [
+                "Use MoSCoW prioritization technique",
+                "Let management decide",
+                "Implement all requirements",
+                "Skip prioritization"
+            ],
+            correct: 0,
+            explanation: "MoSCoW (Must, Should, Could, Won't) provides a structured framework for collaborative requirement prioritization."
+        },
+        {
+            id: 17,
+            text: "Which technique is MOST effective for gathering requirements from end users who perform complex tasks?",
+            options: [
+                "Email survey",
+                "Observation",
+                "Group workshop",
+                "Document review"
+            ],
+            correct: 1,
+            explanation: "Direct observation helps identify nuances and implicit requirements that users might not think to mention in other elicitation methods."
+        },
+        {
+            id: 18,
+            text: "During solution testing, users report that some features don't meet their needs. What should you do FIRST?",
+            options: [
+                "Fix the features immediately",
+                "Review original requirements",
+                "Blame the development team",
+                "Schedule more training"
+            ],
+            correct: 1,
+            explanation: "Reviewing original requirements helps determine if the gap is due to implementation issues or incomplete/incorrect requirements."
+        },
+        {
+            id: 19,
+            text: "Which approach is BEST for documenting rapidly changing requirements?",
+            options: [
+                "Requirements management tool",
+                "Spreadsheet",
+                "Text document",
+                "Email chain"
+            ],
+            correct: 0,
+            explanation: "A requirements management tool provides version control, traceability, and real-time updates needed for rapidly changing requirements."
+        },
+        {
+            id: 20,
+            text: "What is the MOST important consideration when planning business process analysis?",
+            options: [
+                "Available tools",
+                "Process complexity",
+                "Team size",
+                "Project budget"
+            ],
+            correct: 1,
+            explanation: "Process complexity determines the approach, techniques, and level of detail needed for effective analysis."
+        }
+    ]
+}
+// Set 3 (Questions 21-30)
+{
+    questions: [
+        {
+            id: 21,
+            text: "During interface analysis, which deliverable best captures system integration points?",
+            options: [
+                "Context diagram",
+                "Use case diagram",
+                "Process flow",
+                "Entity relationship diagram"
+            ],
+            correct: 0,
+            explanation: "A context diagram specifically shows how a system interacts with external entities and systems, making it ideal for documenting integration points."
+        },
+        {
+            id: 22,
+            text: "What is the BEST approach when stakeholders cannot provide detailed requirements for a critical feature?",
+            options: [
+                "Create a prototype",
+                "Skip the feature",
+                "Make assumptions",
+                "Delay the project"
+            ],
+            correct: 0,
+            explanation: "Prototyping helps stakeholders visualize the feature and provide more detailed feedback through hands-on interaction."
+        },
+        {
+            id: 23,
+            text: "Which technique is MOST effective for validating complex business rules?",
+            options: [
+                "Peer review",
+                "Decision tables",
+                "Documentation review",
+                "Stakeholder interviews"
+            ],
+            correct: 1,
+            explanation: "Decision tables systematically show all possible combinations of conditions and outcomes, making them ideal for validating complex business rules."
+        },
+        {
+            id: 24,
+            text: "A project requires gathering requirements from multiple departments with competing priorities. What should you do FIRST?",
+            options: [
+                "Document all requirements",
+                "Create a stakeholder alignment strategy",
+                "Implement all requests",
+                "Choose highest priority department"
+            ],
+            correct: 1,
+            explanation: "Creating a stakeholder alignment strategy helps manage competing priorities and ensures a structured approach to requirement gathering."
+        },
+        {
+            id: 25,
+            text: "When should you use a RACI matrix in business analysis?",
+            options: [
+                "To document technical specifications",
+                "To clarify stakeholder roles and responsibilities",
+                "To track project milestones",
+                "To manage project budget"
+            ],
+            correct: 1,
+            explanation: "A RACI matrix helps clarify who is Responsible, Accountable, Consulted, and Informed for different aspects of the business analysis work."
+        },
+        {
+            id: 26,
+            text: "What is the MOST important output of requirements validation?",
+            options: [
+                "Technical specifications",
+                "Stakeholder sign-off",
+                "Confirmed requirements baseline",
+                "Project schedule"
+            ],
+            correct: 2,
+            explanation: "A confirmed requirements baseline ensures all stakeholders agree on the requirements and provides a foundation for development."
+        },
+        {
+            id: 27,
+            text: "During elicitation, you notice stakeholders are using different terms for the same concept. What should you do FIRST?",
+            options: [
+                "Create a glossary",
+                "Choose one term",
+                "Ask management to decide",
+                "Ignore the differences"
+            ],
+            correct: 0,
+            explanation: "Creating a glossary ensures consistent terminology usage and prevents misunderstandings among stakeholders."
+        },
+        {
+            id: 28,
+            text: "What is the BEST way to handle scope creep during requirements gathering?",
+            options: [
+                "Reject all new requirements",
+                "Accept all changes",
+                "Use change control process",
+                "Ignore scope changes"
+            ],
+            correct: 2,
+            explanation: "Using a formal change control process helps evaluate the impact of changes and maintain scope control while remaining flexible to necessary changes."
+        },
+        {
+            id: 29,
+            text: "Which technique is MOST effective for identifying process improvement opportunities?",
+            options: [
+                "Value stream mapping",
+                "Stakeholder interviews",
+                "Requirements workshops",
+                "Document analysis"
+            ],
+            correct: 0,
+            explanation: "Value stream mapping helps identify waste and inefficiencies in processes by showing the flow of value through the organization."
+        },
+        {
+            id: 30,
+            text: "When should you perform impact analysis during the requirements process?",
+            options: [
+                "Only at project start",
+                "Before implementing changes",
+                "After implementation",
+                "During testing only"
+            ],
+            correct: 1,
+            explanation: "Impact analysis should be performed before implementing changes to understand how they affect existing requirements and systems."
+        }
+    ]
+}
+// Set 4 (Questions 31-40)
+{
+    questions: [
+        {
+            id: 31,
+            text: "A stakeholder suggests using an emerging technology for a critical business process. What should be your FIRST response?",
+            options: [
+                "Research the technology details",
+                "Assess business value and risks",
+                "Create implementation plan",
+                "Consult IT department"
+            ],
+            correct: 1,
+            explanation: "Assessing business value and risks helps determine if the technology aligns with business needs and is worth the potential risks before investing resources."
+        },
+        {
+            id: 32,
+            text: "Which technique is MOST effective for documenting user interaction flows?",
+            options: [
+                "Activity diagrams",
+                "Data flow diagrams",
+                "Entity relationship diagrams",
+                "Organization charts"
+            ],
+            correct: 0,
+            explanation: "Activity diagrams visually represent the flow of user interactions and system responses, making them ideal for documenting user workflows."
+        },
+        {
+            id: 33,
+            text: "During requirements validation, stakeholders keep adding 'nice-to-have' features. What should you do FIRST?",
+            options: [
+                "Add all features to backlog",
+                "Reject additional features",
+                "Evaluate against project objectives",
+                "Schedule another meeting"
+            ],
+            correct: 2,
+            explanation: "Evaluating features against project objectives helps determine if they add value and align with project goals."
+        },
+        {
+            id: 34,
+            text: "What is the MOST important consideration when creating a business process model?",
+            options: [
+                "Software tools available",
+                "End-to-end process flow",
+                "Team size",
+                "Budget constraints"
+            ],
+            correct: 1,
+            explanation: "Understanding the end-to-end process flow is crucial for creating an accurate and comprehensive process model."
+        },
+        {
+            id: 35,
+            text: "When should you use a CRUD matrix in business analysis?",
+            options: [
+                "To track project risks",
+                "To document data operations",
+                "To manage stakeholders",
+                "To estimate costs"
+            ],
+            correct: 1,
+            explanation: "A CRUD matrix documents how different processes Create, Read, Update, or Delete data, helping understand data operations and dependencies."
+        },
+        {
+            id: 36,
+            text: "Which technique is BEST for analyzing requirements conflicts?",
+            options: [
+                "Requirements workshop",
+                "Email survey",
+                "Document review",
+                "Individual interviews"
+            ],
+            correct: 0,
+            explanation: "Requirements workshops bring stakeholders together to discuss and resolve conflicts collaboratively."
+        },
+        {
+            id: 37,
+            text: "What should you do when stakeholders request features that exceed project constraints?",
+            options: [
+                "Reject all requests",
+                "Prioritize and negotiate",
+                "Expand project scope",
+                "Implement partially"
+            ],
+            correct: 1,
+            explanation: "Prioritizing requests and negotiating with stakeholders helps balance needs with project constraints."
+        },
+        {
+            id: 38,
+            text: "Which approach is MOST effective for gathering requirements from resistant stakeholders?",
+            options: [
+                "Formal documentation",
+                "One-on-one interviews",
+                "Group workshops",
+                "Email communication"
+            ],
+            correct: 1,
+            explanation: "One-on-one interviews create a comfortable environment for resistant stakeholders to share their perspectives."
+        },
+        {
+            id: 39,
+            text: "What is the BEST way to validate business rules in a regulated industry?",
+            options: [
+                "Peer review",
+                "Compliance review",
+                "User testing",
+                "Process simulation"
+            ],
+            correct: 1,
+            explanation: "Compliance review ensures business rules align with regulatory requirements and industry standards."
+        },
+        {
+            id: 40,
+            text: "During solution implementation, users report process inefficiencies. What should you do FIRST?",
+            options: [
+                "Document the issues",
+                "Analyze current workflow",
+                "Implement changes immediately",
+                "Schedule training"
+            ],
+            correct: 1,
+            explanation: "Analyzing the current workflow helps identify the root causes of inefficiencies before making changes."
+        }
+    ]
+}
+// Set 5 (Questions 41-50)
+{
+    questions: [
+        {
+            id: 41,
+            text: "Which type of diagram is MOST effective for showing data relationships and attributes?",
+            options: [
+                "Entity Relationship Diagram",
+                "Process Flow Diagram",
+                "Use Case Diagram",
+                "Activity Diagram"
+            ],
+            correct: 0,
+            explanation: "Entity Relationship Diagrams (ERD) specifically show how different data entities relate to each other and their attributes."
+        },
+        {
+            id: 42,
+            text: "What is the BEST approach when stakeholders cannot attend requirements workshops?",
+            options: [
+                "Cancel the workshops",
+                "Proceed without them",
+                "Use alternative elicitation methods",
+                "Delegate to junior staff"
+            ],
+            correct: 2,
+            explanation: "Using alternative elicitation methods (like one-on-one interviews or surveys) ensures all stakeholder perspectives are captured."
+        },
+        {
+            id: 43,
+            text: "During requirements validation, you discover conflicting business rules. What should you do FIRST?",
+            options: [
+                "Document all conflicts",
+                "Analyze impact on business objectives",
+                "Implement most recent rule",
+                "Ignore minor conflicts"
+            ],
+            correct: 1,
+            explanation: "Analyzing how conflicts impact business objectives helps prioritize resolution efforts and maintain focus on business goals."
+        },
+        {
+            id: 44,
+            text: "What is the MOST important factor in creating effective use cases?",
+            options: [
+                "Technical details",
+                "User perspective",
+                "System architecture",
+                "Development timeline"
+            ],
+            correct: 1,
+            explanation: "Use cases should be written from the user's perspective to effectively capture how they will interact with the system."
+        },
+        {
+            id: 45,
+            text: "Which technique is BEST for documenting non-functional requirements?",
+            options: [
+                "User stories",
+                "Quality attributes matrix",
+                "Process flows",
+                "Use cases"
+            ],
+            correct: 1,
+            explanation: "A quality attributes matrix helps document and organize non-functional requirements like performance, security, and usability."
+        },
+        {
+            id: 46,
+            text: "When should you perform requirement prioritization in an Agile project?",
+            options: [
+                "Only at project start",
+                "Continuously throughout the project",
+                "After all requirements are gathered",
+                "Before each release"
+            ],
+            correct: 1,
+            explanation: "In Agile projects, requirements prioritization is continuous to ensure the most valuable features are delivered first."
+        },
+        {
+            id: 47,
+            text: "What is the BEST way to handle scope changes after requirements baseline?",
+            options: [
+                "Reject all changes",
+                "Accept all changes",
+                "Follow change control process",
+                "Consult project manager only"
+            ],
+            correct: 2,
+            explanation: "Following the change control process ensures proper evaluation, impact assessment, and approval of scope changes."
+        },
+        {
+            id: 48,
+            text: "Which technique is MOST effective for gathering requirements from subject matter experts?",
+            options: [
+                "Email surveys",
+                "Document analysis",
+                "Structured interviews",
+                "Large workshops"
+            ],
+            correct: 2,
+            explanation: "Structured interviews allow in-depth exploration of complex topics and leverage the SME's expertise effectively."
+        },
+        {
+            id: 49,
+            text: "What should you do when stakeholders disagree on solution design?",
+            options: [
+                "Choose the simplest design",
+                "Evaluate against requirements",
+                "Follow IT team preference",
+                "Implement multiple solutions"
+            ],
+            correct: 1,
+            explanation: "Evaluating designs against established requirements provides an objective basis for decision-making."
+        },
+        {
+            id: 50,
+            text: "Which approach is BEST for documenting complex stakeholder feedback?",
+            options: [
+                "Requirements traceability matrix",
+                "Feedback log with categories",
+                "Email summary",
+                "Meeting minutes"
+            ],
+            correct: 1,
+            explanation: "A categorized feedback log helps organize and track complex feedback for proper analysis and resolution."
+        }
+    ]
+}
+// Set 6 (Questions 51-60)
+{
+    questions: [
+        {
+            id: 51,
+            text: "Which modeling technique is MOST effective for showing how data moves through business processes?",
+            options: [
+                "Data Flow Diagram",
+                "Entity Relationship Diagram",
+                "Use Case Diagram",
+                "Organization Chart"
+            ],
+            correct: 0,
+            explanation: "Data Flow Diagrams specifically show how data moves between processes, systems, and external entities in a business process."
+        },
+        {
+            id: 52,
+            text: "During requirements gathering, a key stakeholder consistently misses meetings. What should you do FIRST?",
+            options: [
+                "Proceed without their input",
+                "Escalate to their manager",
+                "Investigate the root cause",
+                "Document as a project risk"
+            ],
+            correct: 2,
+            explanation: "Understanding why the stakeholder is missing meetings helps identify appropriate solutions and ensure their valuable input is captured."
+        },
+        {
+            id: 53,
+            text: "What is the BEST approach for documenting requirements for a global system?",
+            options: [
+                "Create separate requirements for each region",
+                "Document configurable requirements",
+                "Use only headquarters requirements",
+                "Create maximum requirements set"
+            ],
+            correct: 1,
+            explanation: "Documenting configurable requirements allows for regional variations while maintaining a single, manageable requirements set."
+        },
+        {
+            id: 54,
+            text: "When should you use a context diagram in business analysis?",
+            options: [
+                "To show process details",
+                "To document system boundaries",
+                "To track project timeline",
+                "To manage stakeholders"
+            ],
+            correct: 1,
+            explanation: "Context diagrams show system boundaries and interactions with external entities, helping define project scope."
+        },
+        {
+            id: 55,
+            text: "Which technique is MOST effective for validating requirements completeness?",
+            options: [
+                "Peer review",
+                "Requirements walkthrough",
+                "Email distribution",
+                "Management approval"
+            ],
+            correct: 1,
+            explanation: "Requirements walkthroughs involve systematically reviewing requirements with stakeholders to ensure completeness and accuracy."
+        },
+        {
+            id: 56,
+            text: "What should you do when business rules conflict with technical constraints?",
+            options: [
+                "Follow business rules only",
+                "Follow technical constraints only",
+                "Analyze impact and negotiate solution",
+                "Implement parallel solutions"
+            ],
+            correct: 2,
+            explanation: "Analyzing impact and negotiating solutions helps find a balance between business needs and technical limitations."
+        },
+        {
+            id: 57,
+            text: "When is a fishbone diagram MOST useful in business analysis?",
+            options: [
+                "Project scheduling",
+                "Root cause analysis",
+                "Resource allocation",
+                "Budget planning"
+            ],
+            correct: 1,
+            explanation: "Fishbone diagrams help identify and analyze potential causes of problems in a structured way."
+        },
+        {
+            id: 58,
+            text: "What is the BEST way to handle emerging requirements late in the project?",
+            options: [
+                "Automatically reject them",
+                "Evaluate against business objectives",
+                "Add to current scope",
+                "Defer to next phase"
+            ],
+            correct: 1,
+            explanation: "Evaluating late requirements against business objectives helps determine if they're critical enough to warrant scope changes."
+        },
+        {
+            id: 59,
+            text: "Which requirement attribute is MOST important for traceability?",
+            options: [
+                "Requirement ID",
+                "Description",
+                "Priority",
+                "Status"
+            ],
+            correct: 0,
+            explanation: "A unique requirement ID is essential for tracking requirements through their lifecycle and maintaining traceability."
+        },
+        {
+            id: 60,
+            text: "What is the BEST approach for gathering requirements from multiple vendor systems?",
+            options: [
+                "Interface analysis",
+                "Process modeling",
+                "Use case analysis",
+                "Data modeling"
+            ],
+            correct: 0,
+            explanation: "Interface analysis helps understand how different vendor systems need to interact and what data needs to be exchanged."
+        }
+    ]
+}
+// Set 7 (Questions 61-70)
+{
+    questions: [
+        {
+            id: 61,
+            text: "During business analysis planning, you notice potential regulatory impacts. What should you do FIRST?",
+            options: [
+                "Document as assumptions",
+                "Consult compliance experts",
+                "Ignore until confirmed",
+                "Add to risk register"
+            ],
+            correct: 1,
+            explanation: "Consulting compliance experts early ensures regulatory requirements are properly understood and incorporated into the analysis."
+        },
+        {
+            id: 62,
+            text: "Which technique is MOST effective for capturing business rules from legacy systems?",
+            options: [
+                "User interviews",
+                "System observation",
+                "Reverse engineering",
+                "Document analysis"
+            ],
+            correct: 2,
+            explanation: "Reverse engineering helps identify business rules embedded in legacy systems by analyzing system behavior and code."
+        },
+        {
+            id: 63,
+            text: "What is the BEST approach for prioritizing requirements when multiple stakeholders have different priorities?",
+            options: [
+                "Follow senior stakeholder's priority",
+                "Use weighted scoring model",
+                "Implement all requirements",
+                "Random selection"
+            ],
+            correct: 1,
+            explanation: "A weighted scoring model provides an objective way to prioritize requirements based on multiple criteria and stakeholder input."
+        },
+        {
+            id: 64,
+            text: "When should you update the requirements management plan?",
+            options: [
+                "Only at project start",
+                "When processes change significantly",
+                "After project completion",
+                "Annually only"
+            ],
+            correct: 1,
+            explanation: "The requirements management plan should be updated when processes change significantly to ensure it remains effective and relevant."
+        },
+        {
+            id: 65,
+            text: "Which technique is MOST effective for validating complex calculation requirements?",
+            options: [
+                "Peer review",
+                "Test cases",
+                "Documentation review",
+                "Stakeholder approval"
+            ],
+            correct: 1,
+            explanation: "Test cases with specific examples help validate complex calculations by comparing expected and actual results."
+        },
+        {
+            id: 66,
+            text: "What should you do when stakeholders request features that conflict with architectural constraints?",
+            options: [
+                "Reject the features",
+                "Override the constraints",
+                "Analyze alternatives and trade-offs",
+                "Escalate to management"
+            ],
+            correct: 2,
+            explanation: "Analyzing alternatives and trade-offs helps find solutions that balance stakeholder needs with technical constraints."
+        },
+        {
+            id: 67,
+            text: "Which tool is BEST for documenting the impact of requirement changes?",
+            options: [
+                "Change log",
+                "Impact analysis matrix",
+                "Requirements list",
+                "Project schedule"
+            ],
+            correct: 1,
+            explanation: "An impact analysis matrix helps systematically document how changes affect different aspects of the project and solution."
+        },
+        {
+            id: 68,
+            text: "What is the MOST important consideration when creating user stories?",
+            options: [
+                "Technical details",
+                "Business value",
+                "Development time",
+                "Testing approach"
+            ],
+            correct: 1,
+            explanation: "Business value is crucial in user stories as it helps prioritize work and ensure focus on delivering value to stakeholders."
+        },
+        {
+            id: 69,
+            text: "Which approach is BEST for documenting requirements for a phased implementation?",
+            options: [
+                "Single requirements document",
+                "Phase-specific documents",
+                "Release-based requirements",
+                "Separate technical specs"
+            ],
+            correct: 2,
+            explanation: "Release-based requirements help organize and track requirements based on planned implementation phases while maintaining overall context."
+        },
+        {
+            id: 70,
+            text: "What should you do when requirements contradict industry best practices?",
+            options: [
+                "Follow best practices only",
+                "Ignore best practices",
+                "Analyze business justification",
+                "Implement both approaches"
+            ],
+            correct: 2,
+            explanation: "Analyzing business justification helps determine if deviating from best practices is warranted based on specific business needs."
+        }
+    ]
+}
+// Set 8 (Questions 71-80)
+{
+    questions: [
+        {
+            id: 71,
+            text: "What is the BEST approach for handling requirements dependencies in a complex project?",
+            options: [
+                "Document in requirements list",
+                "Create dependency matrix",
+                "Ask development team",
+                "Handle during implementation"
+            ],
+            correct: 1,
+            explanation: "A dependency matrix provides a clear visual representation of relationships between requirements and helps in planning implementation sequence."
+        },
+        {
+            id: 72,
+            text: "During elicitation, stakeholders disagree about future state processes. What should you do FIRST?",
+            options: [
+                "Document all versions",
+                "Analyze current state thoroughly",
+                "Choose one stakeholder's version",
+                "Create new process independently"
+            ],
+            correct: 1,
+            explanation: "Understanding the current state thoroughly helps identify improvement opportunities and provides a baseline for discussing future state options."
+        },
+        {
+            id: 73,
+            text: "What is the MOST effective way to validate data requirements?",
+            options: [
+                "Review with developers",
+                "Create data models",
+                "Check with users only",
+                "Use sample data scenarios"
+            ],
+            correct: 3,
+            explanation: "Using sample data scenarios helps stakeholders understand how data will be used and validates requirements in practical contexts."
+        },
+        {
+            id: 74,
+            text: "Which technique is BEST for documenting high-level solution scope?",
+            options: [
+                "Context diagram",
+                "Detailed requirements list",
+                "Technical specifications",
+                "Project schedule"
+            ],
+            correct: 0,
+            explanation: "Context diagrams show system boundaries and interactions at a high level, making them ideal for documenting solution scope."
+        },
+        {
+            id: 75,
+            text: "What should you do when business processes vary by region?",
+            options: [
+                "Standardize all processes",
+                "Document variations and rationale",
+                "Use headquarters process",
+                "Create separate systems"
+            ],
+            correct: 1,
+            explanation: "Documenting variations and their rationale helps understand necessary differences while identifying opportunities for standardization."
+        },
+        {
+            id: 76,
+            text: "Which requirement attribute is MOST important for change management?",
+            options: [
+                "Priority level",
+                "Version number",
+                "Complexity rating",
+                "Cost estimate"
+            ],
+            correct: 1,
+            explanation: "Version numbers are crucial for tracking requirement changes and maintaining a clear history of modifications."
+        },
+        {
+            id: 77,
+            text: "When should you use a state diagram in requirements analysis?",
+            options: [
+                "To show process flow",
+                "To document data lifecycle",
+                "To track project status",
+                "To manage resources"
+            ],
+            correct: 1,
+            explanation: "State diagrams are ideal for showing how data or objects transition through different states in their lifecycle."
+        },
+        {
+            id: 78,
+            text: "What is the BEST approach for gathering non-functional requirements?",
+            options: [
+                "Ask developers only",
+                "Copy from standards",
+                "Use quality attributes framework",
+                "Focus on features only"
+            ],
+            correct: 2,
+            explanation: "A quality attributes framework ensures comprehensive coverage of non-functional requirements like performance, security, and usability."
+        },
+        {
+            id: 79,
+            text: "During implementation, the team discovers technical limitations affecting requirements. What should you do FIRST?",
+            options: [
+                "Change requirements immediately",
+                "Analyze impact on business objectives",
+                "Ignore limitations",
+                "Find new technology"
+            ],
+            correct: 1,
+            explanation: "Analyzing impact on business objectives helps determine appropriate response to technical limitations and potential alternatives."
+        },
+        {
+            id: 80,
+            text: "Which technique is MOST effective for requirements prioritization in a regulated industry?",
+            options: [
+                "MoSCoW method with compliance focus",
+                "Simple ranking",
+                "Cost-benefit analysis only",
+                "Developer preference"
+            ],
+            correct: 0,
+            explanation: "MoSCoW method with compliance focus helps balance regulatory requirements with other business needs in prioritization."
+        }
+    ]
+}
+// Set 9 (Questions 81-90)
+{
+    questions: [
+        {
+            id: 81,
+            text: "When stakeholders are requesting frequent requirement changes during development, what should you do FIRST?",
+            options: [
+                "Implement a change freeze",
+                "Analyze change patterns",
+                "Accept all changes",
+                "Reject all changes"
+            ],
+            correct: 1,
+            explanation: "Analyzing change patterns helps identify underlying issues and determine appropriate process adjustments or interventions."
+        },
+        {
+            id: 82,
+            text: "Which technique is MOST effective for documenting system interfaces in a complex integration project?",
+            options: [
+                "Interface specification matrix",
+                "Simple flow chart",
+                "Requirements list",
+                "User stories"
+            ],
+            correct: 0,
+            explanation: "An interface specification matrix provides detailed documentation of all system interfaces, including data elements, formats, and protocols."
+        },
+        {
+            id: 83,
+            text: "What is the BEST approach for validating requirements in an Agile project?",
+            options: [
+                "Wait for final sign-off",
+                "Continuous stakeholder review",
+                "Technical review only",
+                "End-of-project validation"
+            ],
+            correct: 1,
+            explanation: "Continuous stakeholder review aligns with Agile principles and allows for early feedback and adjustment."
+        },
+        {
+            id: 84,
+            text: "Which modeling technique is MOST useful for showing complex decision logic?",
+            options: [
+                "Process flow diagram",
+                "Decision tree",
+                "Use case diagram",
+                "Sequence diagram"
+            ],
+            correct: 1,
+            explanation: "Decision trees effectively visualize complex decision paths and their outcomes in a hierarchical structure."
+        },
+        {
+            id: 85,
+            text: "During requirements analysis, you discover potential legal implications. What should you do FIRST?",
+            options: [
+                "Document as risks",
+                "Consult legal experts",
+                "Ignore until confirmed",
+                "Remove requirements"
+            ],
+            correct: 1,
+            explanation: "Consulting legal experts early ensures compliance and helps understand implications before proceeding with requirements."
+        },
+        {
+            id: 86,
+            text: "What is the MOST important consideration when creating a requirements baseline?",
+            options: [
+                "Technical feasibility",
+                "Stakeholder agreement",
+                "Development timeline",
+                "Budget constraints"
+            ],
+            correct: 1,
+            explanation: "Stakeholder agreement is crucial for a requirements baseline as it represents a formal consensus on project scope."
+        },
+        {
+            id: 87,
+            text: "Which technique is BEST for identifying gaps in business processes?",
+            options: [
+                "Gap analysis matrix",
+                "Stakeholder interviews",
+                "Requirements list",
+                "Project timeline"
+            ],
+            correct: 0,
+            explanation: "A gap analysis matrix systematically compares current state to desired future state to identify process gaps."
+        },
+        {
+            id: 88,
+            text: "When should you use a requirements workshop?",
+            options: [
+                "Only at project start",
+                "For complex decisions requiring collaboration",
+                "After development starts",
+                "During testing phase"
+            ],
+            correct: 1,
+            explanation: "Requirements workshops are most effective when complex decisions require collaborative discussion and immediate feedback from multiple stakeholders."
+        },
+        {
+            id: 89,
+            text: "What is the BEST approach for handling conflicting non-functional requirements?",
+            options: [
+                "Implement all requirements",
+                "Analyze trade-offs with stakeholders",
+                "Choose technical preference",
+                "Ignore conflicts"
+            ],
+            correct: 1,
+            explanation: "Analyzing trade-offs with stakeholders helps balance competing non-functional requirements based on business priorities."
+        },
+        {
+            id: 90,
+            text: "Which tool is MOST effective for tracking requirement verification status?",
+            options: [
+                "Project schedule",
+                "Requirements traceability matrix",
+                "Status report",
+                "Risk register"
+            ],
+            correct: 1,
+            explanation: "A requirements traceability matrix can track verification status by linking requirements to test cases and their execution results."
+        }
+    ]
+}
+// Set 10 (Questions 91-100)
+{
+    questions: [
+        {
+            id: 91,
+            text: "When creating a business process model for a global organization, what should you consider FIRST?",
+            options: [
+                "Regional variations in processes",
+                "Technical infrastructure",
+                "Project timeline",
+                "Development costs"
+            ],
+            correct: 0,
+            explanation: "Understanding regional variations is crucial for creating a process model that accommodates necessary differences while identifying standardization opportunities."
+        },
+        {
+            id: 92,
+            text: "Which technique is MOST effective for validating complex system interactions?",
+            options: [
+                "Documentation review",
+                "Prototype testing",
+                "Email confirmation",
+                "Stakeholder interview"
+            ],
+            correct: 1,
+            explanation: "Prototype testing allows stakeholders to validate complex system interactions in a realistic context before final implementation."
+        },
+        {
+            id: 93,
+            text: "What is the BEST approach for documenting assumptions during requirements gathering?",
+            options: [
+                "Include in meeting minutes",
+                "Create assumptions log with validation plan",
+                "Discuss verbally only",
+                "Add to risk register"
+            ],
+            correct: 1,
+            explanation: "An assumptions log with validation plan helps track and verify assumptions that could impact requirements."
+        },
+        {
+            id: 94,
+            text: "During elicitation, stakeholders provide conflicting performance requirements. What should you do FIRST?",
+            options: [
+                "Choose the strictest requirement",
+                "Analyze business impact of each option",
+                "Average the requirements",
+                "Implement all versions"
+            ],
+            correct: 1,
+            explanation: "Analyzing business impact helps determine appropriate performance requirements based on actual business needs."
+        },
+        {
+            id: 95,
+            text: "Which tool is MOST useful for prioritizing requirements across multiple business units?",
+            options: [
+                "Simple list",
+                "Multi-criteria decision matrix",
+                "First-come-first-served",
+                "Management directive"
+            ],
+            correct: 1,
+            explanation: "A multi-criteria decision matrix helps objectively evaluate requirements against multiple business unit priorities."
+        },
+        {
+            id: 96,
+            text: "What should you do when discovered requirements conflict with project constraints?",
+            options: [
+                "Ignore the constraints",
+                "Reject the requirements",
+                "Analyze value-impact trade-offs",
+                "Expand project scope"
+            ],
+            correct: 2,
+            explanation: "Analyzing value-impact trade-offs helps balance requirement benefits against project constraints."
+        },
+        {
+            id: 97,
+            text: "Which technique is MOST effective for gathering requirements from external system interfaces?",
+            options: [
+                "Interface analysis document",
+                "User interviews",
+                "Process modeling",
+                "Requirements workshop"
+            ],
+            correct: 0,
+            explanation: "Interface analysis documentation specifically focuses on understanding and documenting external system interactions and requirements."
+        },
+        {
+            id: 98,
+            text: "When should you perform a feasibility analysis during the requirements process?",
+            options: [
+                "After implementation",
+                "Before detailed requirements",
+                "During testing",
+                "After project approval"
+            ],
+            correct: 1,
+            explanation: "Performing feasibility analysis before detailed requirements helps ensure effort isn't wasted on requirements that aren't feasible."
+        },
+        {
+            id: 99,
+            text: "What is the BEST way to handle emergent requirements in an iterative project?",
+            options: [
+                "Reject all new requirements",
+                "Add to product backlog with priority",
+                "Implement immediately",
+                "Wait for next project"
+            ],
+            correct: 1,
+            explanation: "Adding to the product backlog with appropriate priority allows for proper evaluation and scheduling of emergent requirements."
+        },
+        {
+            id: 100,
+            text: "Which approach is MOST effective for validating business rules in a complex system?",
+            options: [
+                "Developer review",
+                "Decision tables and test cases",
+                "User acceptance only",
+                "Documentation review"
+            ],
+            correct: 1,
+            explanation: "Decision tables combined with test cases provide a systematic way to validate complex business rules and their interactions."
+        }
+    ]
+}
+// Set 11 (Questions 101-110)
+{
+    questions: [
+        {
+            id: 101,
+            text: "Which technique is MOST effective for analyzing the impact of a proposed business process change?",
+            options: [
+                "Process simulation",
+                "Stakeholder interviews",
+                "Documentation review",
+                "Risk assessment"
+            ],
+            correct: 0,
+            explanation: "Process simulation allows stakeholders to see and analyze the impacts of proposed changes before actual implementation."
+        },
+        {
+            id: 102,
+            text: "When multiple stakeholders have different interpretations of a requirement, what should you do FIRST?",
+            options: [
+                "Document all interpretations",
+                "Create requirement clarification session",
+                "Choose most senior interpretation",
+                "Implement multiple versions"
+            ],
+            correct: 1,
+            explanation: "A clarification session brings stakeholders together to reach a common understanding and document agreed interpretation."
+        },
+        {
+            id: 103,
+            text: "What is the BEST approach for documenting requirements for a system replacement project?",
+            options: [
+                "Copy existing system features",
+                "Start from scratch",
+                "Analyze current pain points and desired improvements",
+                "Follow vendor recommendations"
+            ],
+            correct: 2,
+            explanation: "Analyzing current pain points and desired improvements helps ensure the new system addresses existing issues while meeting future needs."
+        },
+        {
+            id: 104,
+            text: "Which tool is MOST effective for tracking requirements changes across multiple releases?",
+            options: [
+                "Spreadsheet",
+                "Requirements management tool",
+                "Email chain",
+                "Project schedule"
+            ],
+            correct: 1,
+            explanation: "A requirements management tool provides version control, traceability, and relationship mapping across multiple releases."
+        },
+        {
+            id: 105,
+            text: "When should you use a business capability model?",
+            options: [
+                "During technical design",
+                "For strategic analysis",
+                "After implementation",
+                "During testing"
+            ],
+            correct: 1,
+            explanation: "Business capability models help analyze and align requirements with organizational strategic capabilities and goals."
+        },
+        {
+            id: 106,
+            text: "What is the MOST important consideration when creating user acceptance criteria?",
+            options: [
+                "Technical feasibility",
+                "Measurable outcomes",
+                "Development timeline",
+                "Budget constraints"
+            ],
+            correct: 1,
+            explanation: "Measurable outcomes ensure clear, verifiable criteria for determining whether requirements have been met successfully."
+        },
+        {
+            id: 107,
+            text: "Which approach is BEST for gathering requirements from resistant stakeholders?",
+            options: [
+                "Formal documentation requests",
+                "One-on-one sessions",
+                "Group workshops",
+                "Email surveys"
+            ],
+            correct: 1,
+            explanation: "One-on-one sessions create a comfortable environment for resistant stakeholders to share their perspectives and concerns."
+        },
+        {
+            id: 108,
+            text: "During requirements validation, you discover a potential security vulnerability. What should you do FIRST?",
+            options: [
+                "Document in requirements",
+                "Consult security experts",
+                "Ignore if not in scope",
+                "Add to backlog"
+            ],
+            correct: 1,
+            explanation: "Consulting security experts immediately helps assess the vulnerability's impact and determine appropriate requirements modifications."
+        },
+        {
+            id: 109,
+            text: "What is the BEST way to handle requirements dependencies in an Agile project?",
+            options: [
+                "Ignore dependencies",
+                "Document in backlog with relationships",
+                "Handle during sprint",
+                "Create separate list"
+            ],
+            correct: 1,
+            explanation: "Documenting dependencies in the backlog with clear relationships helps in sprint planning and requirement prioritization."
+        },
+        {
+            id: 110,
+            text: "Which technique is MOST effective for validating data migration requirements?",
+            options: [
+                "Stakeholder review",
+                "Pilot data migration",
+                "Documentation review",
+                "Team discussion"
+            ],
+            correct: 1,
+            explanation: "A pilot data migration helps validate requirements by testing actual data conversion and identifying potential issues."
+        }
+    ]
+}
+// Set 12 (Questions 111-120)
+{
+    questions: [
+        {
+            id: 111,
+            text: "When creating a business case for a new initiative, what should you focus on FIRST?",
+            options: [
+                "Technical solution details",
+                "Business value and alignment",
+                "Development timeline",
+                "Resource availability"
+            ],
+            correct: 1,
+            explanation: "Business value and strategic alignment should be the primary focus to justify the initiative and secure stakeholder support."
+        },
+        {
+            id: 112,
+            text: "Which technique is MOST effective for analyzing complex workflow requirements?",
+            options: [
+                "BPMN (Business Process Model and Notation)",
+                "Simple flowchart",
+                "Text description",
+                "Requirements list"
+            ],
+            correct: 0,
+            explanation: "BPMN provides comprehensive notation for modeling complex business processes, including parallel flows, decision points, and exceptions."
+        },
+        {
+            id: 113,
+            text: "What should you do when stakeholders request features beyond the approved scope?",
+            options: [
+                "Reject immediately",
+                "Add to backlog without analysis",
+                "Analyze value and impact",
+                "Implement all requests"
+            ],
+            correct: 2,
+            explanation: "Analyzing value and impact helps determine if scope changes are justified and understand implications for project constraints."
+        },
+        {
+            id: 114,
+            text: "Which approach is BEST for documenting integration requirements?",
+            options: [
+                "Interface control document",
+                "General requirements list",
+                "User stories",
+                "Email communication"
+            ],
+            correct: 0,
+            explanation: "Interface control documents specifically detail integration points, data exchanges, and technical specifications needed for system integration."
+        },
+        {
+            id: 115,
+            text: "During elicitation, you discover conflicting regulatory requirements. What should you do FIRST?",
+            options: [
+                "Choose the strictest requirement",
+                "Consult compliance experts",
+                "Ignore the conflicts",
+                "Document as risks"
+            ],
+            correct: 1,
+            explanation: "Consulting compliance experts helps understand regulatory requirements correctly and resolve conflicts appropriately."
+        },
+        {
+            id: 116,
+            text: "What is the MOST important factor in requirement prioritization for a mission-critical system?",
+            options: [
+                "Development cost",
+                "Implementation time",
+                "Business impact and risk",
+                "User preference"
+            ],
+            correct: 2,
+            explanation: "Business impact and risk are crucial factors for prioritizing requirements in mission-critical systems to ensure essential functionality."
+        },
+        {
+            id: 117,
+            text: "Which technique is BEST for validating complex calculation requirements?",
+            options: [
+                "Peer review",
+                "Sample data testing",
+                "Documentation review",
+                "User approval"
+            ],
+            correct: 1,
+            explanation: "Sample data testing with known inputs and expected outputs helps validate complex calculations effectively."
+        },
+        {
+            id: 118,
+            text: "When should you create a data dictionary?",
+            options: [
+                "After development",
+                "During data modeling",
+                "Before testing",
+                "After deployment"
+            ],
+            correct: 1,
+            explanation: "Creating a data dictionary during data modeling helps establish common understanding of data elements and their attributes."
+        },
+        {
+            id: 119,
+            text: "What is the BEST approach for handling ambiguous requirements?",
+            options: [
+                "Make assumptions",
+                "Clarify with stakeholders",
+                "Leave as is",
+                "Remove requirement"
+            ],
+            correct: 1,
+            explanation: "Clarifying ambiguous requirements with stakeholders ensures shared understanding and prevents implementation issues."
+        },
+        {
+            id: 120,
+            text: "Which tool is MOST effective for tracking requirement dependencies across multiple projects?",
+            options: [
+                "Spreadsheet",
+                "Requirements management system",
+                "Project schedule",
+                "Email updates"
+            ],
+            correct: 1,
+            explanation: "A requirements management system provides capabilities to track and manage complex dependencies across multiple projects effectively."
+        }
+    ]
+}
+// Set 13 (Questions 121-130)
+{
+    questions: [
+        {
+            id: 121,
+            text: "Which analysis technique is MOST effective when stakeholders disagree about the future state process?",
+            options: [
+                "Current state analysis",
+                "Benchmarking",
+                "Cost-benefit analysis",
+                "Risk assessment"
+            ],
+            correct: 1,
+            explanation: "Benchmarking provides objective data about industry practices, helping stakeholders make informed decisions about future state processes."
+        },
+        {
+            id: 122,
+            text: "What should you do when requirements conflict with enterprise architecture standards?",
+            options: [
+                "Override the standards",
+                "Reject the requirements",
+                "Analyze alternatives and impacts",
+                "Ignore the conflict"
+            ],
+            correct: 2,
+            explanation: "Analyzing alternatives and impacts helps find solutions that balance business needs with architectural standards."
+        },
+        {
+            id: 123,
+            text: "Which approach is MOST effective for gathering requirements for automated business rules?",
+            options: [
+                "Developer interviews",
+                "Decision tables",
+                "Use cases",
+                "Process flows"
+            ],
+            correct: 1,
+            explanation: "Decision tables help systematically document business rules and their conditions, making them ideal for automation requirements."
+        },
+        {
+            id: 124,
+            text: "During requirements review, stakeholders keep adding 'gold-plating' features. What should you do FIRST?",
+            options: [
+                "Accept all features",
+                "Evaluate against business objectives",
+                "Reject additional features",
+                "Schedule another meeting"
+            ],
+            correct: 1,
+            explanation: "Evaluating features against business objectives helps identify and eliminate unnecessary 'gold-plating' while maintaining focus on essential requirements."
+        },
+        {
+            id: 125,
+            text: "What is the MOST important consideration when creating a requirements communication plan?",
+            options: [
+                "Available technology",
+                "Stakeholder preferences and needs",
+                "Project budget",
+                "Team size"
+            ],
+            correct: 1,
+            explanation: "Stakeholder preferences and needs are crucial for effective requirements communication and ensuring information reaches the right people in the right format."
+        },
+        {
+            id: 126,
+            text: "Which technique is BEST for validating cross-functional process requirements?",
+            options: [
+                "Individual reviews",
+                "Cross-functional workshops",
+                "Email approvals",
+                "Documentation review"
+            ],
+            correct: 1,
+            explanation: "Cross-functional workshops bring together representatives from different areas to validate process flows and interactions."
+        },
+        {
+            id: 127,
+            text: "When should you perform impact analysis for a change request?",
+            options: [
+                "After implementation",
+                "Before approval",
+                "During testing",
+                "After approval"
+            ],
+            correct: 1,
+            explanation: "Impact analysis should be performed before change request approval to understand implications and make informed decisions."
+        },
+        {
+            id: 128,
+            text: "What is the BEST approach for documenting non-functional requirements for a critical system?",
+            options: [
+                "User stories",
+                "Quality attribute scenarios",
+                "General statements",
+                "Technical specifications"
+            ],
+            correct: 1,
+            explanation: "Quality attribute scenarios provide specific, measurable criteria for non-functional requirements like performance, security, and reliability."
+        },
+        {
+            id: 129,
+            text: "Which technique is MOST effective for identifying missed requirements?",
+            options: [
+                "Requirements checklist",
+                "Peer review",
+                "User testing",
+                "Documentation review"
+            ],
+            correct: 2,
+            explanation: "User testing often reveals missed requirements as users interact with the solution in realistic scenarios."
+        },
+        {
+            id: 130,
+            text: "What should you do when stakeholders can't agree on requirement priorities in a time-constrained project?",
+            options: [
+                "Implement all requirements",
+                "Use weighted criteria matrix",
+                "Follow senior stakeholder",
+                "Delay the project"
+            ],
+            correct: 1,
+            explanation: "A weighted criteria matrix provides an objective method for prioritizing requirements based on agreed-upon criteria and constraints."
+        }
+    ]
+}
+// Set 14 (Questions 131-140)
+{
+    questions: [
+        {
+            id: 131,
+            text: "When implementing a global solution, what should you consider FIRST in requirements gathering?",
+            options: [
+                "Technical infrastructure",
+                "Local regulatory requirements",
+                "Development timeline",
+                "Project budget"
+            ],
+            correct: 1,
+            explanation: "Local regulatory requirements must be understood first as they can significantly impact solution design and implementation in different regions."
+        },
+        {
+            id: 132,
+            text: "Which technique is MOST effective for validating requirements in a rapid development environment?",
+            options: [
+                "Formal documentation review",
+                "Iterative prototyping",
+                "Complete test plan",
+                "Final user acceptance"
+            ],
+            correct: 1,
+            explanation: "Iterative prototyping allows quick validation of requirements and immediate feedback in rapid development environments."
+        },
+        {
+            id: 133,
+            text: "What is the BEST approach for handling conflicting performance requirements from different business units?",
+            options: [
+                "Accept highest performance requirement",
+                "Analyze cost-benefit for each level",
+                "Average all requirements",
+                "Choose simplest to implement"
+            ],
+            correct: 1,
+            explanation: "Analyzing cost-benefit for each performance level helps determine the optimal balance between business value and implementation cost."
+        },
+        {
+            id: 134,
+            text: "During requirements gathering, you discover potential ethical concerns. What should you do FIRST?",
+            options: [
+                "Document as risks",
+                "Escalate to appropriate authorities",
+                "Ignore if legal",
+                "Continue gathering requirements"
+            ],
+            correct: 1,
+            explanation: "Ethical concerns should be escalated immediately to appropriate authorities for guidance and resolution."
+        },
+        {
+            id: 135,
+            text: "Which tool is MOST effective for tracking requirements across multiple vendors?",
+            options: [
+                "Spreadsheet",
+                "Vendor matrix with requirements mapping",
+                "Email communications",
+                "Project schedule"
+            ],
+            correct: 1,
+            explanation: "A vendor matrix with requirements mapping helps track which requirements are assigned to which vendors and their interdependencies."
+        },
+        {
+            id: 136,
+            text: "What is the BEST way to validate data transformation requirements?",
+            options: [
+                "Code review",
+                "Sample data conversion test",
+                "Documentation review",
+                "Stakeholder approval"
+            ],
+            correct: 1,
+            explanation: "Testing with sample data conversion helps validate data transformation requirements by showing actual results."
+        },
+        {
+            id: 137,
+            text: "Which technique is MOST effective for identifying process bottlenecks?",
+            options: [
+                "Stakeholder interviews",
+                "Process simulation",
+                "Documentation review",
+                "Team meetings"
+            ],
+            correct: 1,
+            explanation: "Process simulation can reveal bottlenecks by showing how process flows behave under various conditions."
+        },
+        {
+            id: 138,
+            text: "What should you do when requirements contradict industry standards?",
+            options: [
+                "Reject the requirements",
+                "Analyze business justification",
+                "Follow standards only",
+                "Implement both"
+            ],
+            correct: 1,
+            explanation: "Analyzing business justification helps determine if deviating from industry standards is warranted based on specific business needs."
+        },
+        {
+            id: 139,
+            text: "Which approach is BEST for documenting security requirements?",
+            options: [
+                "General guidelines",
+                "Specific measurable criteria",
+                "Technical specifications",
+                "User stories"
+            ],
+            correct: 1,
+            explanation: "Specific measurable criteria ensure security requirements are clear, testable, and verifiable."
+        },
+        {
+            id: 140,
+            text: "When should you use a decision matrix in requirements analysis?",
+            options: [
+                "For simple choices",
+                "For complex multi-criteria decisions",
+                "After implementation",
+                "During testing"
+            ],
+            correct: 1,
+            explanation: "Decision matrices are most useful for complex decisions involving multiple criteria and alternatives that need objective evaluation."
+        }
+    ]
+}
+// Set 15 (Questions 141-150)
+{
+    questions: [
+        {
+            id: 141,
+            text: "During requirements elicitation, stakeholders provide conflicting user interface requirements. What should you do FIRST?",
+            options: [
+                "Create multiple interfaces",
+                "Use prototypes to validate preferences",
+                "Choose most popular option",
+                "Follow UX guidelines only"
+            ],
+            correct: 1,
+            explanation: "Prototypes help stakeholders visualize options and reach consensus based on actual user interaction experiences."
+        },
+        {
+            id: 142,
+            text: "Which technique is MOST effective for gathering requirements from users who can't articulate their needs clearly?",
+            options: [
+                "Written surveys",
+                "Observation and shadowing",
+                "Requirements workshop",
+                "Email communication"
+            ],
+            correct: 1,
+            explanation: "Observation and shadowing help identify requirements by watching actual work processes and user behaviors."
+        },
+        {
+            id: 143,
+            text: "What is the BEST approach for documenting requirements for a system with frequent updates?",
+            options: [
+                "Static document",
+                "Version-controlled repository",
+                "Email updates",
+                "Verbal communication"
+            ],
+            correct: 1,
+            explanation: "A version-controlled repository maintains requirement history and changes while ensuring access to current versions."
+        },
+        {
+            id: 144,
+            text: "When should you perform a feasibility study for proposed requirements?",
+            options: [
+                "After implementation",
+                "Before detailed analysis",
+                "During testing",
+                "After approval"
+            ],
+            correct: 1,
+            explanation: "Conducting feasibility studies before detailed analysis prevents wasting resources on requirements that aren't viable."
+        },
+        {
+            id: 145,
+            text: "Which tool is MOST effective for analyzing the impact of process changes across departments?",
+            options: [
+                "Process flow diagram",
+                "Cross-functional impact matrix",
+                "Department checklist",
+                "Change log"
+            ],
+            correct: 1,
+            explanation: "A cross-functional impact matrix helps identify how process changes affect different departments and their interactions."
+        },
+        {
+            id: 146,
+            text: "What is the BEST way to handle requirements that conflict with system architecture?",
+            options: [
+                "Override architecture",
+                "Reject requirements",
+                "Analyze alternatives and trade-offs",
+                "Implement workarounds"
+            ],
+            correct: 2,
+            explanation: "Analyzing alternatives and trade-offs helps find solutions that balance business needs with architectural constraints."
+        },
+        {
+            id: 147,
+            text: "Which technique is MOST effective for validating business rules in a regulated environment?",
+            options: [
+                "Peer review",
+                "Compliance-focused testing",
+                "User acceptance",
+                "Documentation review"
+            ],
+            correct: 1,
+            explanation: "Compliance-focused testing ensures business rules meet regulatory requirements and organizational policies."
+        },
+        {
+            id: 148,
+            text: "What should you do when stakeholders request changes that impact multiple integrated systems?",
+            options: [
+                "Implement changes immediately",
+                "Conduct system-wide impact analysis",
+                "Reject changes",
+                "Update one system only"
+            ],
+            correct: 1,
+            explanation: "System-wide impact analysis helps understand the full scope of changes across all integrated systems."
+        },
+        {
+            id: 149,
+            text: "Which approach is BEST for documenting requirements for a phased implementation?",
+            options: [
+                "Single large document",
+                "Phase-specific requirements packages",
+                "Informal notes",
+                "Email updates"
+            ],
+            correct: 1,
+            explanation: "Phase-specific requirements packages help organize and manage requirements based on implementation phases while maintaining traceability."
+        },
+        {
+            id: 150,
+            text: "When should you use a decision tree in requirements analysis?",
+            options: [
+                "For simple decisions",
+                "For complex conditional logic",
+                "After implementation",
+                "During testing"
+            ],
+            correct: 1,
+            explanation: "Decision trees are most effective for analyzing and documenting complex conditional logic and decision paths."
+        }
+    ]
+}
+// Set 16 (Questions 151-160)
+{
+    questions: [
+        {
+            id: 151,
+            text: "When implementing a new system that replaces multiple legacy systems, what should you focus on FIRST?",
+            options: [
+                "Technical specifications",
+                "Data migration strategy",
+                "Current business processes",
+                "User interface design"
+            ],
+            correct: 2,
+            explanation: "Understanding current business processes across all legacy systems is crucial before determining how to consolidate and improve them in the new system."
+        },
+        {
+            id: 152,
+            text: "Which technique is MOST effective for capturing requirements from experts who have limited availability?",
+            options: [
+                "Long workshops",
+                "Focused interview sessions",
+                "Email questionnaires",
+                "General meetings"
+            ],
+            correct: 1,
+            explanation: "Focused interview sessions maximize limited time with experts by targeting specific topics and preparing questions in advance."
+        },
+        {
+            id: 153,
+            text: "What should you do when requirements appear to exceed project budget constraints?",
+            options: [
+                "Cut requirements randomly",
+                "Analyze value-to-cost ratio",
+                "Increase budget",
+                "Implement partially"
+            ],
+            correct: 1,
+            explanation: "Analyzing value-to-cost ratio helps prioritize requirements and identify those that provide the most business value within budget constraints."
+        },
+        {
+            id: 154,
+            text: "Which approach is MOST effective for documenting system interface requirements?",
+            options: [
+                "General descriptions",
+                "Interface specification matrix",
+                "User stories",
+                "Process flows"
+            ],
+            correct: 1,
+            explanation: "An interface specification matrix provides detailed documentation of data elements, formats, and protocols needed for system interactions."
+        },
+        {
+            id: 155,
+            text: "During requirements validation, stakeholders identify regulatory concerns. What should you do FIRST?",
+            options: [
+                "Document as risks",
+                "Consult legal/compliance experts",
+                "Ignore if not critical",
+                "Add to backlog"
+            ],
+            correct: 1,
+            explanation: "Consulting legal/compliance experts immediately ensures regulatory requirements are properly understood and addressed."
+        },
+        {
+            id: 156,
+            text: "What is the BEST method for prioritizing requirements across multiple business units?",
+            options: [
+                "First-come-first-served",
+                "Weighted scoring model",
+                "Management directive",
+                "Equal distribution"
+            ],
+            correct: 1,
+            explanation: "A weighted scoring model provides objective criteria for prioritizing requirements while considering multiple business unit needs."
+        },
+        {
+            id: 157,
+            text: "Which technique is MOST effective for validating complex workflow requirements?",
+            options: [
+                "Documentation review",
+                "Process simulation",
+                "Team discussion",
+                "Email approval"
+            ],
+            correct: 1,
+            explanation: "Process simulation allows stakeholders to validate complex workflows by seeing how they operate in different scenarios."
+        },
+        {
+            id: 158,
+            text: "When should you create a data model during requirements analysis?",
+            options: [
+                "After implementation",
+                "During initial analysis",
+                "Before project approval",
+                "After testing"
+            ],
+            correct: 1,
+            explanation: "Creating data models during initial analysis helps understand data relationships and structures early in the project."
+        },
+        {
+            id: 159,
+            text: "What is the BEST approach for handling conflicting performance requirements?",
+            options: [
+                "Choose highest performance",
+                "Analyze business impact",
+                "Average requirements",
+                "Implement all versions"
+            ],
+            correct: 1,
+            explanation: "Analyzing business impact helps determine appropriate performance levels based on actual business needs and constraints."
+        },
+        {
+            id: 160,
+            text: "Which tool is MOST effective for managing requirements in a matrix organization?",
+            options: [
+                "Spreadsheet",
+                "Requirements management system",
+                "Email updates",
+                "Shared documents"
+            ],
+            correct: 1,
+            explanation: "A requirements management system helps coordinate requirements across different organizational units and maintain clear ownership."
+        }
+    ]
+}
+// Set 17 (Questions 161-170)
+{
+    questions: [
+        {
+            id: 161,
+            text: "When stakeholders disagree on automation requirements, what should you do FIRST?",
+            options: [
+                "Automate everything possible",
+                "Analyze cost-benefit for each process",
+                "Keep all processes manual",
+                "Follow IT recommendations"
+            ],
+            correct: 1,
+            explanation: "Cost-benefit analysis for each process helps determine which automations provide the most value and justify investment."
+        },
+        {
+            id: 162,
+            text: "Which technique is MOST effective for documenting requirements in a DevOps environment?",
+            options: [
+                "Traditional requirements document",
+                "User stories with acceptance criteria",
+                "Technical specifications",
+                "Process diagrams"
+            ],
+            correct: 1,
+            explanation: "User stories with clear acceptance criteria align with DevOps practices by providing testable requirements that support continuous delivery."
+        },
+        {
+            id: 163,
+            text: "What is the BEST approach for handling requirements when transitioning from legacy to cloud systems?",
+            options: [
+                "Copy existing requirements",
+                "Analyze and modernize requirements",
+                "Focus on technical specs",
+                "Maintain current processes"
+            ],
+            correct: 1,
+            explanation: "Analyzing and modernizing requirements ensures they leverage cloud capabilities while addressing current business needs."
+        },
+        {
+            id: 164,
+            text: "Which method is MOST effective for validating integration requirements across multiple systems?",
+            options: [
+                "Documentation review",
+                "Integration prototype testing",
+                "Team meetings",
+                "Email confirmations"
+            ],
+            correct: 1,
+            explanation: "Integration prototype testing helps validate requirements by demonstrating actual system interactions and data flows."
+        },
+        {
+            id: 165,
+            text: "When implementing an AI-driven solution, what should be the FIRST consideration in requirements gathering?",
+            options: [
+                "Technical capabilities",
+                "Data quality and availability",
+                "User interface design",
+                "Processing speed"
+            ],
+            correct: 1,
+            explanation: "Data quality and availability are crucial for AI solutions as they determine the feasibility and effectiveness of AI implementations."
+        },
+        {
+            id: 166,
+            text: "What is the BEST way to handle requirements for system customization in a COTS implementation?",
+            options: [
+                "Customize everything requested",
+                "Analyze cost-benefit of each customization",
+                "Avoid all customization",
+                "Follow vendor defaults"
+            ],
+            correct: 1,
+            explanation: "Analyzing cost-benefit of each customization helps balance business needs with maintenance costs and upgrade implications."
+        },
+        {
+            id: 167,
+            text: "Which technique is MOST effective for gathering requirements from end users with varying levels of technical expertise?",
+            options: [
+                "Technical documentation",
+                "Interactive prototypes",
+                "Written surveys",
+                "Email requests"
+            ],
+            correct: 1,
+            explanation: "Interactive prototypes help users of all technical levels understand and provide feedback on requirements through hands-on experience."
+        },
+        {
+            id: 168,
+            text: "During requirements gathering, you identify potential compliance risks. What should you do FIRST?",
+            options: [
+                "Document in requirements",
+                "Consult compliance experts",
+                "Ignore if not specified",
+                "Add to backlog"
+            ],
+            correct: 1,
+            explanation: "Consulting compliance experts early ensures requirements properly address compliance risks and regulations."
+        },
+        {
+            id: 169,
+            text: "What is the BEST approach for documenting requirements that span multiple business domains?",
+            options: [
+                "Separate documents per domain",
+                "Integrated requirements with clear traceability",
+                "General overview document",
+                "Technical specifications"
+            ],
+            correct: 1,
+            explanation: "Integrated requirements with clear traceability help manage cross-domain dependencies while maintaining relationships between requirements."
+        },
+        {
+            id: 170,
+            text: "Which tool is MOST effective for analyzing the impact of requirement changes on business processes?",
+            options: [
+                "Change log",
+                "Process impact matrix",
+                "Risk register",
+                "Status report"
+            ],
+            correct: 1,
+            explanation: "A process impact matrix helps identify how requirement changes affect different business processes and their interconnections."
+        }
+    ]
+}
+// Set 18 (Questions 171-180)
+{
+    questions: [
+        {
+            id: 171,
+            text: "When implementing a solution that affects customer-facing processes, what should be the FIRST consideration?",
+            options: [
+                "Internal efficiency",
+                "Customer experience impact",
+                "Technical architecture",
+                "Implementation speed"
+            ],
+            correct: 1,
+            explanation: "Customer experience impact should be prioritized as it directly affects business success and customer satisfaction."
+        },
+        {
+            id: 172,
+            text: "Which technique is MOST effective for analyzing requirements in a digital transformation project?",
+            options: [
+                "Traditional process mapping",
+                "Digital capability assessment",
+                "Standard documentation",
+                "Technical review"
+            ],
+            correct: 1,
+            explanation: "Digital capability assessment helps identify opportunities for digital innovation while ensuring requirements align with transformation goals."
+        },
+        {
+            id: 173,
+            text: "What is the BEST approach for handling security requirements in a mobile application?",
+            options: [
+                "Follow basic standards",
+                "Risk-based security analysis",
+                "Developer preferences",
+                "User convenience focus"
+            ],
+            correct: 1,
+            explanation: "Risk-based security analysis ensures appropriate security measures based on specific threats and data sensitivity."
+        },
+        {
+            id: 174,
+            text: "When stakeholders request real-time data integration, what should you evaluate FIRST?",
+            options: [
+                "Technical feasibility",
+                "Business value and necessity",
+                "Development cost",
+                "Team capability"
+            ],
+            correct: 1,
+            explanation: "Evaluating business value and necessity helps determine if real-time integration is justified given its complexity and cost."
+        },
+        {
+            id: 175,
+            text: "Which method is MOST effective for gathering requirements for blockchain implementation?",
+            options: [
+                "Traditional interviews",
+                "Use case workshops",
+                "Email surveys",
+                "Document review"
+            ],
+            correct: 1,
+            explanation: "Use case workshops help stakeholders understand blockchain capabilities and identify appropriate business applications."
+        },
+        {
+            id: 176,
+            text: "What is the BEST approach for documenting accessibility requirements?",
+            options: [
+                "General guidelines",
+                "Specific compliance criteria",
+                "User preferences",
+                "Technical specs"
+            ],
+            correct: 1,
+            explanation: "Specific compliance criteria ensure accessibility requirements meet standards and are testable."
+        },
+        {
+            id: 177,
+            text: "When implementing an international solution, what should you consider FIRST in requirements gathering?",
+            options: [
+                "Technical standards",
+                "Localization requirements",
+                "Development timeline",
+                "Cost estimates"
+            ],
+            correct: 1,
+            explanation: "Localization requirements, including cultural, legal, and language considerations, are crucial for international solutions."
+        },
+        {
+            id: 178,
+            text: "Which technique is MOST effective for validating machine learning requirements?",
+            options: [
+                "Code review",
+                "Training data analysis",
+                "User testing",
+                "Documentation review"
+            ],
+            correct: 1,
+            explanation: "Training data analysis helps validate if the available data can support the required machine learning capabilities."
+        },
+        {
+            id: 179,
+            text: "What should you do when stakeholders disagree about data privacy requirements?",
+            options: [
+                "Follow strictest approach",
+                "Analyze regulatory requirements",
+                "Implement basic protection",
+                "Delay decision"
+            ],
+            correct: 1,
+            explanation: "Analyzing regulatory requirements provides a clear baseline for data privacy requirements based on compliance needs."
+        },
+        {
+            id: 180,
+            text: "Which approach is BEST for documenting API requirements?",
+            options: [
+                "General description",
+                "API specification template",
+                "User stories",
+                "Process flows"
+            ],
+            correct: 1,
+            explanation: "API specification templates ensure consistent documentation of endpoints, data formats, and integration requirements."
+        }
+    ]
+}
+// Set 19 (Questions 181-190)
+{
+    questions: [
+        {
+            id: 181,
+            text: "During a digital transformation project, stakeholders disagree on the scope of process automation. What should you do FIRST?",
+            options: [
+                "Automate all processes",
+                "Conduct ROI analysis for each process",
+                "Follow IT recommendations",
+                "Maintain manual processes"
+            ],
+            correct: 1,
+            explanation: "ROI analysis for each process helps make objective decisions about automation scope based on business value and cost."
+        },
+        {
+            id: 182,
+            text: "Which technique is MOST effective for gathering IoT (Internet of Things) requirements?",
+            options: [
+                "Traditional interviews",
+                "Device and data mapping workshops",
+                "Email surveys",
+                "General meetings"
+            ],
+            correct: 1,
+            explanation: "Device and data mapping workshops help identify data collection points, integration needs, and use cases specific to IoT implementations."
+        },
+        {
+            id: 183,
+            text: "When implementing a microservices architecture, what should be the FIRST consideration in requirements analysis?",
+            options: [
+                "Technical details",
+                "Service boundaries and interactions",
+                "Development timeline",
+                "Team structure"
+            ],
+            correct: 1,
+            explanation: "Defining service boundaries and interactions is crucial for microservices to ensure proper service decomposition and integration."
+        },
+        {
+            id: 184,
+            text: "What is the BEST approach for documenting requirements for a multi-vendor solution?",
+            options: [
+                "Separate documents per vendor",
+                "Integrated requirements matrix",
+                "General overview",
+                "Technical specs only"
+            ],
+            correct: 1,
+            explanation: "An integrated requirements matrix helps manage dependencies and responsibilities across multiple vendors while maintaining overall solution coherence."
+        },
+        {
+            id: 185,
+            text: "Which method is MOST effective for validating UX requirements?",
+            options: [
+                "Documentation review",
+                "Usability testing with prototypes",
+                "Team discussion",
+                "Written specifications"
+            ],
+            correct: 1,
+            explanation: "Usability testing with prototypes provides direct feedback on UX requirements through actual user interaction."
+        },
+        {
+            id: 186,
+            text: "When implementing a cloud-based solution, what should be the primary focus of security requirements?",
+            options: [
+                "Cost considerations",
+                "Data protection and access control",
+                "Implementation speed",
+                "User convenience"
+            ],
+            correct: 1,
+            explanation: "Data protection and access control are crucial for cloud-based solutions due to shared infrastructure and remote access considerations."
+        },
+        {
+            id: 187,
+            text: "What is the BEST approach for gathering requirements for AI-driven decision support?",
+            options: [
+                "Technical specifications",
+                "Decision criteria workshops",
+                "General interviews",
+                "System documentation"
+            ],
+            correct: 1,
+            explanation: "Decision criteria workshops help identify and document the rules and factors that should guide AI-driven decision making."
+        },
+        {
+            id: 188,
+            text: "During requirements gathering, stakeholders express concerns about system scalability. What should you do FIRST?",
+            options: [
+                "Document technical specs",
+                "Define growth parameters and metrics",
+                "Ignore until implementation",
+                "Add more servers"
+            ],
+            correct: 1,
+            explanation: "Defining growth parameters and metrics helps establish clear scalability requirements based on business projections."
+        },
+        {
+            id: 189,
+            text: "Which technique is MOST effective for validating mobile app requirements?",
+            options: [
+                "Desktop testing",
+                "Mobile-specific user scenarios",
+                "Documentation review",
+                "Team meetings"
+            ],
+            correct: 1,
+            explanation: "Mobile-specific user scenarios help validate requirements considering mobile device constraints and usage patterns."
+        },
+        {
+            id: 190,
+            text: "What should you do when requirements conflict with data governance policies?",
+            options: [
+                "Override policies",
+                "Analyze compliance impact",
+                "Ignore policies",
+                "Implement anyway"
+            ],
+            correct: 1,
+            explanation: "Analyzing compliance impact helps determine if policy exceptions are possible or if requirements need modification to ensure compliance."
+        }
+    ]
+}
+// Set 20 (Questions 191-200)
+{
+    questions: [
+        {
+            id: 191,
+            text: "When implementing a business analytics solution, what should be the FIRST consideration in requirements gathering?",
+            options: [
+                "Tool selection",
+                "Data quality and business metrics",
+                "Visual design",
+                "Report frequency"
+            ],
+            correct: 1,
+            explanation: "Data quality and business metrics are fundamental to ensure analytics requirements align with business decision-making needs."
+        },
+        {
+            id: 192,
+            text: "Which technique is MOST effective for gathering requirements in a regulatory compliance project?",
+            options: [
+                "General interviews",
+                "Compliance mapping workshops",
+                "Email surveys",
+                "Team meetings"
+            ],
+            correct: 1,
+            explanation: "Compliance mapping workshops help systematically identify and document requirements that fulfill specific regulatory obligations."
+        },
+        {
+            id: 193,
+            text: "What is the BEST approach for validating disaster recovery requirements?",
+            options: [
+                "Documentation review",
+                "Scenario-based testing",
+                "Team discussion",
+                "Vendor consultation"
+            ],
+            correct: 1,
+            explanation: "Scenario-based testing helps validate if disaster recovery requirements meet business continuity needs under various conditions."
+        },
+        {
+            id: 194,
+            text: "During requirements analysis, you identify potential ethical implications of AI implementation. What should you do FIRST?",
+            options: [
+                "Document as risks",
+                "Conduct ethical impact assessment",
+                "Ignore if legal",
+                "Continue implementation"
+            ],
+            correct: 1,
+            explanation: "An ethical impact assessment helps identify and address potential ethical concerns before they become issues."
+        },
+        {
+            id: 195,
+            text: "Which method is MOST effective for documenting cross-platform compatibility requirements?",
+            options: [
+                "General guidelines",
+                "Platform-specific matrix",
+                "User stories",
+                "Technical specs"
+            ],
+            correct: 1,
+            explanation: "A platform-specific matrix helps clearly document requirements across different platforms while maintaining consistency."
+        },
+        {
+            id: 196,
+            text: "What should be the FIRST consideration when gathering requirements for a customer self-service portal?",
+            options: [
+                "Technical architecture",
+                "Customer journey mapping",
+                "Internal processes",
+                "Development cost"
+            ],
+            correct: 1,
+            explanation: "Customer journey mapping helps identify key touchpoints and requirements from the customer's perspective."
+        },
+        {
+            id: 197,
+            text: "Which approach is MOST effective for validating data migration requirements?",
+            options: [
+                "Document review",
+                "Pilot migration testing",
+                "Team discussion",
+                "Vendor assessment"
+            ],
+            correct: 1,
+            explanation: "Pilot migration testing helps validate requirements by identifying potential issues with actual data samples."
+        },
+        {
+            id: 198,
+            text: "When implementing a shared services solution, what should be the primary focus of requirements analysis?",
+            options: [
+                "Technical details",
+                "Service level agreements",
+                "Cost allocation",
+                "Team structure"
+            ],
+            correct: 1,
+            explanation: "Service level agreements are crucial for shared services to ensure clear expectations and service delivery standards."
+        },
+        {
+            id: 199,
+            text: "What is the BEST approach for documenting integration requirements in a microservices environment?",
+            options: [
+                "General overview",
+                "API contract specifications",
+                "Informal notes",
+                "Team guidelines"
+            ],
+            correct: 1,
+            explanation: "API contract specifications provide clear, testable requirements for service interactions in a microservices architecture."
+        },
+        {
+            id: 200,
+            text: "Which technique is MOST effective for gathering requirements for system modernization?",
+            options: [
+                "Copy existing features",
+                "Pain point analysis",
+                "Technical assessment",
+                "User interviews"
+            ],
+            correct: 1,
+            explanation: "Pain point analysis helps identify improvement opportunities while ensuring current business needs are met in the modernized system."
+        }
+    ]
+}
+];
+
+        // Rest of the JavaScript code...
+let currentAnswers = new Array(200).fill(null);
+
+function createTabs() {
+    const tabButtons = document.getElementById('tabButtons');
+    const tabContents = document.getElementById('tabContents');
+    
+    for(let i = 0; i < 20; i++) {
+        // Create tab button
+        const button = document.createElement('button');
+        button.className = 'tab-button' + (i === 0 ? ' active' : '');
+        button.textContent = `Questions ${i*10 + 1}-${(i+1)*10}`;
+        button.onclick = () => showTab(i);
+        tabButtons.appendChild(button);
+
+        // Create tab content
+        const content = document.createElement('div');
+        content.className = 'tab-content' + (i === 0 ? ' active' : '');
+        content.id = `tab${i}`;
+        
+        // Add questions to tab
+        const questions = examQuestions[i].questions;
+        questions.forEach(q => {
+            const questionDiv = createQuestionElement(q);
+            content.appendChild(questionDiv);
+        });
+
+        tabContents.appendChild(content);
+    }
+}
+
+function createQuestionElement(question) {
+    const div = document.createElement('div');
+    div.className = 'question';
+    div.innerHTML = `
+        <p><strong>Question ${question.id}:</strong> ${question.text}</p>
+        <div class="options">
+            ${question.options.map((opt, idx) => `
+                <div class="option">
+                    <input type="radio" 
+                           name="q${question.id}" 
+                           value="${idx}"
+                           onchange="updateAnswer(${question.id-1}, ${idx})"
+                    >
+                    <label>${opt}</label>
+                </div>
+            `).join('')}
+        </div>
+        <div class="explanation" id="exp${question.id}">
+            <strong>Explanation:</strong> ${question.explanation}
+        </div>
+    `;
+    return div;
+}
+
+function showTab(tabIndex) {
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    document.querySelectorAll('.tab-button')[tabIndex].classList.add('active');
+    document.getElementById(`tab${tabIndex}`).classList.add('active');
+}
+
+function updateAnswer(questionId, answer) {
+    currentAnswers[questionId] = answer;
+    updateProgress();
+}
+
+function updateProgress() {
+    const answered = currentAnswers.filter(a => a !== null).length;
+    const percentage = (answered / 200) * 100;
+    document.getElementById('progressBar').style.width = percentage + '%';
+}
+
+function submitExam() {
+    let correct = 0;
+    const incorrect = [];
+
+    currentAnswers.forEach((answer, index) => {
+        const questionSet = Math.floor(index / 10);
+        const questionIndex = index % 10;
+        const question = examQuestions[questionSet].questions[questionIndex];
+        
+        if(answer === question.correct) {
+            correct++;
+        } else {
+            incorrect.push({
+                question: index + 1,
+                chosen: answer,
+                correct: question.correct
+            });
+        }
+        
+        // Show explanations
+        document.getElementById(`exp${index+1}`).style.display = 'block';
+    });
+
+    const score = (correct / 200) * 100;
+    
+    document.getElementById('score').textContent = score.toFixed(2);
+    document.getElementById('correct').textContent = correct;
+    document.getElementById('results').style.display = 'block';
+    
+    // Show incorrect answers
+    const incorrectDiv = document.getElementById('incorrectAnswers');
+    incorrectDiv.innerHTML = '<h3>Incorrect Answers:</h3>' + 
+        incorrect.map(i => `
+            <p>Question ${i.question}: You chose option ${i.chosen !== null ? String.fromCharCode(65 + i.chosen) : 'none'}, 
+               correct answer was ${String.fromCharCode(65 + i.correct)}</p>
+        `).join('');
+}
+
+// Initialize the exam interface
+createTabs();
+    </script>
+<script>
+// Timer functionality
+let timeRemaining = 240 * 60; // 240 minutes in seconds
+const timerDisplay = document.getElementById('examTimer');
+
+function updateTimer() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    
+    if (timeRemaining <= 0) {
+        submitExam();
+    } else {
+        timeRemaining--;
+    }
+}
+
+const timerInterval = setInterval(updateTimer, 1000);
+
+// Bookmarking functionality
+function toggleBookmark(questionId) {
+    const questionDiv = document.querySelector(`#question${questionId}`);
+    questionDiv.classList.toggle('bookmarked');
+    updateBookmarksList();
+}
+
+function updateBookmarksList() {
+    const bookmarked = document.querySelectorAll('.bookmarked');
+    const bookmarksList = document.getElementById('bookmarksList');
+    bookmarksList.innerHTML = Array.from(bookmarked)
+        .map(q => `<div>Question ${q.getAttribute('data-id')}</div>`)
+        .join('');
+}
+
+// Review mode functionality
+let reviewMode = false;
+
+function toggleReviewMode() {
+    reviewMode = !reviewMode;
+    const questions = document.querySelectorAll('.question');
+    questions.forEach(q => {
+        const questionId = q.getAttribute('data-id');
+        const answer = currentAnswers[questionId - 1];
+        const correct = examQuestions[Math.floor((questionId-1)/10)].questions[(questionId-1)%10].correct;
+        
+        if (reviewMode) {
+            q.style.backgroundColor = answer === correct ? '#d4edda' : '#f8d7da';
+            q.querySelector('.explanation').style.display = 'block';
+        } else {
+            q.style.backgroundColor = '';
+            q.querySelector('.explanation').style.display = 'none';
+        }
+    });
+}
+
+// Enhanced results analysis
+function showDetailedResults() {
+    const resultsDiv = document.getElementById('results');
+    const topicScores = calculateTopicScores();
+    
+    const topicResults = Object.entries(topicScores)
+        .map(([topic, score]) => `
+            <div class="topic-score">
+                <h4>${topic}</h4>
+                <p>Score: ${score.correct}/${score.total} (${(score.correct/score.total*100).toFixed(2)}%)</p>
+            </div>
+        `).join('');
+        
+    resultsDiv.innerHTML += `
+        <div class="results-detail">
+            <h3>Topic Analysis</h3>
+            ${topicResults}
+        </div>
+    `;
+}
+
+function calculateTopicScores() {
+    const topics = {
+        'Needs Assessment': {correct: 0, total: 0},
+        'Planning': {correct: 0, total: 0},
+        'Analysis': {correct: 0, total: 0},
+        'Traceability': {correct: 0, total: 0},
+        'Evaluation': {correct: 0, total: 0}
+    };
+    
+    // Calculate scores for each topic
+    // Implementation depends on how topics are mapped to questions
+    
+    return topics;
+}
+
+// Modify the existing submitExam function to include enhanced results
+const originalSubmitExam = submitExam;
+submitExam = function() {
+    originalSubmitExam();
+    showDetailedResults();
+    clearInterval(timerInterval);
+}
+
+// Navigation controls
+function navigateToQuestion(direction) {
+    const currentTab = document.querySelector('.tab-content.active');
+    const currentTabIndex = parseInt(currentTab.id.replace('tab', ''));
+    
+    if (direction === 'next' && currentTabIndex < 19) {
+        showTab(currentTabIndex + 1);
+    } else if (direction === 'prev' && currentTabIndex > 0) {
+        showTab(currentTabIndex - 1);
+    }
+}
+</script>
+</body>
+</html>
